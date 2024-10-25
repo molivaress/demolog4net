@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
 
 namespace log4netdemo.Controllers
 {
@@ -8,6 +9,13 @@ namespace log4netdemo.Controllers
         // GET: HomeController
         public ActionResult Index()
         {
+            
+            return View();
+        }
+        public IActionResult Privacy()
+        {
+            //logger.Warn("Warn! Privacy zone!");
+
             return View();
         }
 
