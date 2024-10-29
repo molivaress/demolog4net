@@ -1,20 +1,24 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using log4net;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Logging;
 
 namespace log4netdemo.Controllers
 {
     public class HomeController : Controller
     {
+        ILog logger = LogManager.GetLogger("debug");
         // GET: HomeController
         public ActionResult Index()
         {
-            
+            logger.Info("info ingresa al index :: Aplication log4netdemo");
+            logger.Debug("debug demo4net");
+            logger.Warn("warn demo4net");
+            logger.Error("error demo4net");
+
             return View();
         }
         public IActionResult Privacy()
         {
-            //logger.Warn("Warn! Privacy zone!");
+            logger.Warn("Warn! Privacy zone! :: Aplication log4netdemo");
 
             return View();
         }

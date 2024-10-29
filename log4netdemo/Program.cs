@@ -2,7 +2,11 @@ var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddRazorPages();
-//builder.Services.AddHttpLogging();
+//builder.Services.addlo();
+builder.Host.ConfigureLogging(logging =>
+{
+    logging.AddLog4Net();
+});
 
 builder.Services.AddControllersWithViews();
 
