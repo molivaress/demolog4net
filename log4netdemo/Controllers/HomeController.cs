@@ -9,10 +9,10 @@ namespace log4netdemo.Controllers
         // GET: HomeController
         public ActionResult Index()
         {
-            logger.Info("info ingresa al index :: Aplication log4netdemo");
-            logger.Debug("debug demo4net");
-            logger.Warn("warn demo4net");
-            logger.Error("error demo4net");
+            logger.Info("info ingresa al index :: test for blob storage updasted");
+            logger.Debug("debug demo4net :: test for blob storage updasted");
+            logger.Warn("warn demo4net :: test for blob storage updasted");
+            logger.Error("error demo4net :: test for blob storage updasted");
 
             return View();
         }
