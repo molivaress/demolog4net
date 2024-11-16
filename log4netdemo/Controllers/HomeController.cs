@@ -1,5 +1,11 @@
-﻿using log4net;
+﻿using System.ComponentModel;
+using System.IO;
+using log4net;
+using log4netdemo.data.EFModels;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Azure.Storage;
+using Microsoft.Azure.Storage.Blob;
+using Newtonsoft.Json;
 
 namespace log4netdemo.Controllers
 {
@@ -14,7 +20,26 @@ namespace log4netdemo.Controllers
             logger.Warn("warn demo4net :: test for blob storage updasted");
             logger.Error("error demo4net :: test for blob storage updasted");
 
-            return View();
+            var items = new List<User>();
+            try
+            {
+                using (var db = new CoreContext())
+                {
+                    items = db.Users.ToList();
+                }
+                Console.WriteLine("Datos recuperados desde BD Azure");
+                Console.WriteLine(JsonConvert.SerializeObject(items));
+            }catch (Exception ex)
+            {
+                Console.WriteLine(ex.ToString());
+                items.Clear();
+                items.Add(new User()
+                {
+                    IdUser= -1, Names = ex.Message.ToString(),
+                });
+            }
+
+            return View(items);
         }
         public IActionResult Privacy()
         {
@@ -91,5 +116,9 @@ namespace log4netdemo.Controllers
                 return View();
             }
         }
+
+        
+
+
     }
 }

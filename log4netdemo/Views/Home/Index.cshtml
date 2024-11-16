@@ -3,6 +3,34 @@
 }
 
 <div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+    <h1 class="display-4">Welcome ASP .net Core</h1>
+    <p> subir archivos </p>
+    <form action="/upload" method="post" enctype="multipart/form-data">
+        <label for="fileInput">Selecciona un archivo:</label>
+        <input type="file" name="File" id="fileInput" required />
+        <button type="submit">Subir Archivo</button>
+    </form>
+
 </div>
+
+
+<table class="table">
+    <thead>
+        <tr class="bg-primary">
+            <th>ID</th>
+            <th>Nombres</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var user in Model)
+        {
+            <tr>
+                <td class="bg-info">@user.IdUser</td>
+                <td class="bg-info">@user.Names</td>
+                <td></td>
+                
+            </tr>
+        }
+    </tbody>
+</table>
+
