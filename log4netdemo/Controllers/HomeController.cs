@@ -60,14 +60,25 @@ namespace log4netdemo.Controllers
             return View();
         }
 
+        public IActionResult RedirectToHome()
+        {
+            var ReturnUrl = "https://google.com";
+            //Response.Redirect(ReturnUrl);
+            //return RedirectPermanent(ReturnUrl);
+            return Redirect(ReturnUrl);
+        }
+
         // POST: HomeController/Create
         [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Create(IFormCollection collection)
+        //[ValidateAntiForgeryToken]
+        public async Task<IActionResult> Create(IFormCollection collection)
         {
             try
             {
-                return RedirectToAction(nameof(Index));
+                await Task.Delay(1200);
+                Console.WriteLine("yengo a google ");
+                return RedirectToHome();
+                //return RedirectToAction(nameof(Index));
             }
             catch
             {
