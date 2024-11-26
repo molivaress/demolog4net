@@ -1,49 +1,50 @@
-﻿using System.ComponentModel;
-using System.IO;
-using log4net;
+﻿using log4net;
 using log4netdemo.data.EFModels;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Azure.Storage;
-using Microsoft.Azure.Storage.Blob;
+using Microsoft.EntityFrameworkCore;
 using Newtonsoft.Json;
 
 namespace log4netdemo.Controllers
 {
     public class HomeController : Controller
     {
-        ILog logger = LogManager.GetLogger("debug");
+        private readonly ILog _logger = LogManager.GetLogger("debug");
+
         // GET: HomeController
-        public ActionResult Index()
+        public async Task<ActionResult> Index()
         {
-            logger.Info("info ingresa al index :: test for blob storage updasted");
-            logger.Debug("debug demo4net :: test for blob storage updasted");
-            logger.Warn("warn demo4net :: test for blob storage updasted");
-            logger.Error("error demo4net :: test for blob storage updasted");
+            _logger.Info("info ingresa al index :: test for blob storage updasted");
+            _logger.Debug("debug demo4net :: test for blob storage updasted");
+            _logger.Warn("warn demo4net :: test for blob storage updasted");
+            _logger.Error("error demo4net :: test for blob storage updasted");
 
             var items = new List<User>();
             try
             {
-                using (var db = new CoreContext())
+                await using (var db = new CoreContext())
                 {
-                    items = db.Users.ToList();
+                    items = await db.Users.ToListAsync();
                 }
+
                 Console.WriteLine("Datos recuperados desde BD Azure");
                 Console.WriteLine(JsonConvert.SerializeObject(items));
-            }catch (Exception ex)
+            }
+            catch (Exception ex)
             {
                 Console.WriteLine(ex.ToString());
                 items.Clear();
                 items.Add(new User()
                 {
-                    IdUser= -1, Names = ex.Message.ToString(),
+                    IdUser = -1, Names = ex.Message.ToString(),
                 });
             }
 
             return View(items);
         }
+
         public IActionResult Privacy()
         {
-            logger.Warn("Warn! Privacy zone! :: Aplication log4netdemo");
+            _logger.Warn("Warn! Privacy zone! :: Aplication log4netdemo");
 
             return View();
         }
@@ -62,10 +63,8 @@ namespace log4netdemo.Controllers
 
         public IActionResult RedirectToHome()
         {
-            var ReturnUrl = "https://google.com";
-            //Response.Redirect(ReturnUrl);
-            //return RedirectPermanent(ReturnUrl);
-            return Redirect(ReturnUrl);
+            var returnUrl = "https://google.com";
+            return Redirect(returnUrl);
         }
 
         // POST: HomeController/Create
@@ -78,7 +77,6 @@ namespace log4netdemo.Controllers
                 await Task.Delay(1200);
                 Console.WriteLine("yengo a google ");
                 return RedirectToHome();
-                //return RedirectToAction(nameof(Index));
             }
             catch
             {
@@ -127,9 +125,5 @@ namespace log4netdemo.Controllers
                 return View();
             }
         }
-
-        
-
-
     }
 }

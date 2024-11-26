@@ -2,14 +2,14 @@
     ViewData["Title"] = "Home Page";
 }
 
-<a href="/home/create">Login</a>
+<a class="btn-primary" href="/home/create">Login</a>
 
 <div class="text-center">
     <h1 class="display-4">Welcome ASP .net Core</h1>
     <p> subir archivos </p>
     <form action="/upload" method="post" enctype="multipart/form-data">
         <label for="fileInput">Selecciona un archivo:</label>
-        <input type="file" name="File" id="fileInput" required />
+        <input type="file" name="File" id="fileInput" required/>
         <button type="submit">Subir Archivo</button>
     </form>
 
@@ -18,21 +18,21 @@
 
 <table class="table">
     <thead>
-        <tr class="bg-primary">
-            <th>ID</th>
-            <th>Nombres</th>
-        </tr>
+    <tr class="bg-primary">
+        <th>ID</th>
+        <th>Nombres</th>
+    </tr>
     </thead>
     <tbody>
-        @foreach (var user in Model)
-        {
-            <tr>
-                <td class="bg-info">@user.IdUser</td>
-                <td class="bg-info">@user.Names</td>
-                <td></td>
-                
-            </tr>
-        }
+    @foreach (var user in Model)
+    {
+        <tr>
+            <td class="bg-info">@user.IdUser</td>
+            <td class="bg-info">@user.Names</td>
+            <td></td>
+
+        </tr>
+    }
     </tbody>
 </table>
 
