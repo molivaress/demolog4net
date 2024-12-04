@@ -7,14 +7,18 @@ namespace autenticacion.Controllers
     public class AuthController : Controller
     {
         private readonly ILogger<AuthController> _logger;
+        private readonly IConfiguration _config;
 
-        public AuthController(ILogger<AuthController> logger)
+        public AuthController(ILogger<AuthController> logger, IConfiguration config)
         {
             _logger = logger;
+            _config = config;
         }
 
         public IActionResult Register()
         {
+            string? aa = _config["testKey"] == null ? "test in local" : _config["testKey"];
+            Console.WriteLine($"hola este es mi key ${aa}");
             return View();
         }
 
@@ -45,7 +49,6 @@ namespace autenticacion.Controllers
                 return RedirectToHome();
             }
 
-            ViewData["Message"] = "User or password is incorrect.";
             return View();
         }
 
@@ -63,8 +66,8 @@ namespace autenticacion.Controllers
 
         public IActionResult RedirectToHome()
         {
-            var urlDashboardHome = "http://localhost:5237/";
-            return Redirect(urlDashboardHome);
+            var homeApp = _config["HOME_APP"] ?? "http://localhost:5237/";
+            return Redirect(homeApp);
         }
     }
 }
