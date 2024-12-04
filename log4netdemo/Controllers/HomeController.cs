@@ -9,6 +9,12 @@ namespace log4netdemo.Controllers
     public class HomeController : Controller
     {
         private readonly ILog _logger = LogManager.GetLogger("debug");
+        private readonly IConfiguration _config;
+
+        public HomeController(IConfiguration config)
+        {
+            _config = config;
+        }
 
         // GET: HomeController
         public async Task<ActionResult> Index()
@@ -124,6 +130,13 @@ namespace log4netdemo.Controllers
             {
                 return View();
             }
+        }
+
+        public IActionResult GoToLogin()
+        {
+            //href="http://localhost:5055/Auth/Login/"
+            var homeApp = _config["AUTH_APP"] ?? "http://localhost:5055/Auth/Login/";
+            return Redirect(homeApp);
         }
     }
 }
